@@ -1,0 +1,24 @@
+@import '../../styles/global';
+
+.songTable {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.2fr 3fr 2fr 0.3fr;
+  row-gap: 25px;
+  color: #ddd;
+
+  .tableHeader span:nth-child(1) {
+    text-align: center;
+  }
+}
+
+.tableHeader {
+  display: contents; /* Allows the header to align with grid rows */
+  font-weight: bold;
+  color: #888;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+
+  border-bottom: 1px solid $secondary-color;
+  padding-bottom: 20px;
+}

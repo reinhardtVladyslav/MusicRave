@@ -1,0 +1,47 @@
+@import '../../styles/global';
+
+.uploadBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  .uploadButton {
+    font-size: 16px;
+    cursor: pointer;
+    color: $active-color;
+  }
+
+  .uploadButton svg {
+    margin-right: 8px;
+  }
+  .uploadHint {
+    font-size: 12px;
+    color: $secondary-color;
+  }
+
+}
+.fileInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .fileName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $secondary-color;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+
+.removeButton {
+  margin-left: 10px;
+  color: $primary-color;
+  cursor: pointer;
+}
+
+.hiddenInput {
+  display: none;
+}

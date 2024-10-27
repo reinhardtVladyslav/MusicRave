@@ -2,10 +2,9 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
 # C extensions
 *.so
-
+.DS_Store
 # Distribution / packaging
 .Python
 build/
@@ -133,3 +132,6 @@ dmypy.json
 
 # that should not change!
 # used in self-checking
+
+./front-end/node_modules/
+./front-end/dist/

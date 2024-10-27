@@ -1,0 +1,11 @@
+@import '../../styles/global';
+
+.defaultButtonClass {
+  color: $primary-color;
+  height: fit-content;
+  padding: 6px 16px;
+  background: $active-color;
+  text-transform: uppercase;
+  border-radius: 4px;
+  font-weight: bold;
+}
