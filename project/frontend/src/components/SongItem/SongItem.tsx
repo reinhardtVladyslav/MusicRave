@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import style from './SongItem.module.scss';
-import music from '../../assets/data/music.json';
+// import music from '../../assets/data/music.json';
 
 interface Song {
     id: number;
@@ -12,9 +12,20 @@ interface Song {
 }
 
 const SongItem: React.FC = () => {
+    const [music, setSongs] = useState<Song[]>([]);
     const [currentSong, setCurrentSong] = useState<Song | null>(null);
     const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
+
+    useEffect(() => {
+        const fetchSongs = async () => {
+            const response = await fetch('http://localhost:8000/tracks/api/tracks/');
+            const data = await response.json();
+            setSongs(data);
+        };
+
+        fetchSongs();
+    }, []);
 
     useEffect(() => {
         // Clean up audio on unmount

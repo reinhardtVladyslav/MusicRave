@@ -51,7 +51,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def __str__(self):
-        return f"'id': {self.id}, 'first_name': '{self.first_name}', 'last_name': '{self.last_name}', 'email': '{self.email}', 'created_at': {int(self.created_at.timestamp())}"
+        return self.email
 
     def __repr__(self):
         return f"{User.__name__}(id={self.id})"
