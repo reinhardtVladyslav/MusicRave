@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Please Please Me",
+    "author": "The Beatles",
+    "duration": "2:30",
+    "album": "Abbey Road",
+    "audio": "https://rocknation.su/upload/mp3/The%20Beatles/1963%20-%20Please%20Please%20Me/01.%20I%20Saw%20Her%20Standing%20There.mp3",
+    "image": "https://www.thebeatles.com/sites/g/files/g2000005341/f/201809/abbey_road.jpg"
+  },
+  {
+    "id": 2,
+    "name": "It_s A Beautiful Day",
+    "author": "Queen",
+    "duration": "5:55",
+    "album": "A Night at the Opera",
+    "audio": "https://rocknation.su/upload/mp3/Queen/1995%20-%20Made%20In%20Heaven/01.%20It_s%20A%20Beautiful%20Day.mp3",
+    "image": "https://www.queenonline.com/sites/g/files/g2000005341/f/201809/queen_-_anato.jpg"
+  },
+  {
+    "id": 3,
+    "name": "High Voltage",
+    "author": "AC/DC",
+    "duration": "8:02",
+    "album": "Led Zeppelin IV",
+    "audio": "https://rocknation.su/upload/mp3/AC-DC/1975%20-%20High%20Voltage/02.%20She_s%20Got%20Balls.mp3",
+    "image": "https://www.ledzeppelin.com/sites/g/files/g2000005341/f/201809/led_zeppelin_-_iv.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Californication",
+    "author": "Red Hot Chili Peppers",
+    "duration": "6:30",
+    "album": "Hotel California",
+    "audio": "https://rocknation.su/upload/mp3/Red%20Hot%20Chili%20Peppers/1999%20-%20Californication/06.%20Californication.mp3",
+    "image": "https://www.eagles.com/sites/g/files/g2000005341/f/201809/eagles_-_hotel_california.jpg"
+  }
+]

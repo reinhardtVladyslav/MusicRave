@@ -1,0 +1,17 @@
+@use 'scss-reset/reset';
+
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&family=Aoboshi+One&display=swap');
+
+$main-font: 'Roboto', sans-serif;
+$primary-font: 'Aoboshi One', sans-serif;
+
+$primary-color: #FFFFFF;
+$secondary-color: #9B9C9C;
+$active-color: #6200E8;
+
+$background-color: #070707;
+$border-color: #656565;
+$overlay-color: #1E1E1E;
+
+

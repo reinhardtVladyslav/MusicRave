@@ -1,0 +1,42 @@
+@import '../../styles/global';
+
+.formGroup {
+  --pad: 1rem;
+  position: relative;
+  height: 56px;
+
+  input {
+    padding: var(--pad);
+    border-radius: 4px;
+    background-color: var(--bg);
+    border: 1px solid $secondary-color;
+    color: $primary-color;
+    width: 100%;
+    outline: none;
+    height: 100%;
+  }
+
+  label {
+    color: $secondary-color;
+    position: absolute;
+    left: var(--pad);
+    top: var(--pad);
+    background: var(--bg);
+    padding-inline: .3em;
+    transition: transform 200ms;
+    pointer-events: none;
+    transform-origin: left;
+    translate: -.3em;
+  }
+
+  input::placeholder {
+    opacity: 0;
+  }
+
+  input:focus + label,
+  input:not(:placeholder-shown) + label {
+    transform: translateY(calc(-50% - var(--pad))) scale(.8);
+    color: $secondary-color;
+    background: $background-color;
+  }
+}
