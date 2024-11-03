@@ -1,0 +1,29 @@
+@import './styles/global';
+
+.App {
+  background: $background-color;
+  height: 100vh;
+  padding: 60px 54px 0 93px;
+  font-family: $main-font;
+  position: relative;
+
+  h1 {
+    font-size: 48px;
+    color: $primary-color;
+    font-family: $primary-font;
+  }
+}
+
+.appHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: $primary-color;
+  margin-bottom: 45px;
+}
+
+.modalActive {
+  * {
+    filter: blur(2px);
+  }
+}
