@@ -133,5 +133,5 @@ dmypy.json
 # that should not change!
 # used in self-checking
 
-./front-end/node_modules/
-./front-end/dist/
+project/frontend/node_modules/
+project/frontend/dist/

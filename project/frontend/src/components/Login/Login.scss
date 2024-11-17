@@ -1,0 +1,118 @@
+.login-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+
+  .login-background {
+    flex: 0 0 50%;
+    height: 100vh;
+    background-image: url('../../assets/images/login_screen.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-left: 0; /* Нульова відстань зліва */
+    margin-right: 100px; /* Відстань між фоном і формою */
+  }
+
+
+  .login-form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 100px; /* Відстань між формою і правим краєм */
+
+    .login-logo {
+      margin-bottom: 60px;
+      img {
+        height: 80px;
+      }
+    }
+
+    h1 {
+      color: #fff; /* Колір тексту білий */
+      font-size: 3rem;
+      margin-bottom: 140px; /* Відстань між заголовком і полем Email */
+      text-align: center;
+    }
+
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .input-group {
+        position: relative;
+        margin-bottom: 32px; /* Збільшена відстань між полями */
+
+        &:last-of-type {
+          margin-bottom: 24px; /* Додає відстань між Password і SignUp */
+        }
+
+        .forgot-password-above {
+          position: absolute;
+          right: 0; /* Вирівнювання по правому краю */
+          top: 50%;
+          transform: translateY(-50%);
+          font-size: 14px; /* Розмір шрифту з Figma */
+          color: rgba(255, 255, 255, 0.6); /* Колір тексту з прозорістю 60% */
+          text-decoration: underline; /* Підкреслення тексту */
+          transition: color 0.3s;
+
+          &:hover {
+            color: rgba(255, 255, 255, 0.8); /* Колір тексту з прозорістю 80% при наведенні */
+          }
+        }
+
+        .show-password {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: rgba(255, 255, 255, 0.6); /* Колір тексту з прозорістю 60% */
+          font-size: 1.25rem;
+          cursor: pointer;
+          transition: color 0.3s;
+
+          &:hover {
+            color: rgba(255, 255, 255, 0.8); /* Колір тексту з прозорістю 80% при наведенні */
+          }
+        }
+      }
+    }
+
+    .signup-link {
+      margin-top: 1rem;
+      font-size: 14px; /* Розмір шрифту з Figma */
+      color: rgba(255, 255, 255, 0.6); /* Колір тексту з прозорістю 60% */
+
+      a {
+        color: rgba(255, 255, 255, 0.6); /* Колір посилання з прозорістю 60% */
+        text-decoration: underline; /* Підкреслення тексту */
+        transition: color 0.3s;
+
+        &:hover {
+          color: rgba(255, 255, 255, 0.8); /* Колір посилання з прозорістю 80% при наведенні */
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    .login-background {
+      display: none;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+}

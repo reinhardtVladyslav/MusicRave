@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './SongItem.module.scss';
 // import music from '../../assets/data/music.json';
 
@@ -32,45 +32,69 @@ const SongItem: React.FC = () => {
         return () => {
             if (audio) {
                 audio.pause();
+                audio.src = ""; // Від'єднуємо джерело
             }
         };
     }, [audio]);
 
     const playSong = (song: Song) => {
-        // Stop any currently playing song
-        if (audio) {
-            audio.pause();
+        try {
+            // Якщо є активний аудіоелемент, зупиняємо його
+            if (audio) {
+                audio.pause();
+                audio.src = ""; // Очищення попереднього джерела
+            }
+
+            // Створюємо новий аудіоелемент
+            const newAudio = new Audio(song.audio);
+            setAudio(newAudio);
+            setCurrentSong(song);
+            setIsPlaying(true);
+
+            // Відтворюємо трек
+            newAudio.play().catch((error) => {
+                console.error("Помилка відтворення:", error);
+                setIsPlaying(false);
+            });
+
+            // Ставимо флаг "isPlaying = false", якщо трек закінчився
+            newAudio.onended = () => {
+                setIsPlaying(false);
+            };
+        } catch (error) {
+            console.error("Помилка під час запуску треку:", error);
         }
-
-        // Set new audio instance
-        const newAudio = new Audio(song.audio);
-        setAudio(newAudio);
-        setCurrentSong(song);
-        setIsPlaying(true);
-        newAudio.play();
-
-        newAudio.onended = () => {
-            setIsPlaying(false);
-        };
     };
 
     const togglePlayPause = () => {
         if (audio) {
-            if (isPlaying) {
-                audio.pause();
-            } else {
-                audio.play();
+            try {
+                if (isPlaying) {
+                    audio.pause();
+                } else {
+                    audio.play().catch((error) => {
+                        console.error("Помилка під час відновлення відтворення:", error);
+                    });
+                }
+                setIsPlaying(!isPlaying);
+            } catch (error) {
+                console.error("Помилка під час паузи/відтворення:", error);
             }
-            setIsPlaying(!isPlaying);
         }
     };
 
     const closeSong = () => {
         if (audio) {
-            audio.pause();
-            audio.currentTime = 0;
-            setIsPlaying(false);
-            setCurrentSong(null);
+            try {
+                audio.pause();
+                audio.currentTime = 0;
+                audio.src = ""; // Очищення джерела аудіо
+                setAudio(null);
+                setIsPlaying(false);
+                setCurrentSong(null);
+            } catch (error) {
+                console.error("Помилка при зупинці треку:", error);
+            }
         }
     };
 

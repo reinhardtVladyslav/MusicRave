@@ -11,11 +11,12 @@ function App() {
         <div className={`${style.App} ${isModalOpen ? style.modalActive : ''}`}>
             <header className={style.appHeader}>
                 <h1 className={style.title}>Discover</h1>
-                <Button text={'New Track'} onClick={() => setIsModalOpen(true)} />
+                <Button text={'New Track'} onClick={() => setIsModalOpen(true)}/>
             </header>
 
             <SongTable/>
             {isModalOpen && <SongUpload setIsModalOpen={setIsModalOpen}/>}
+
         </div>
     );
 }
