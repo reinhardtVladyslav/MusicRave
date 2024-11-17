@@ -14,6 +14,7 @@
     width: 100%;
     outline: none;
     height: 100%;
+    transition: border-color 0.3s, color 0.3s;
   }
 
   label {
@@ -23,7 +24,7 @@
     top: var(--pad);
     background: var(--bg);
     padding-inline: .3em;
-    transition: transform 200ms;
+    transition: transform 200ms, color 0.3s;
     pointer-events: none;
     transform-origin: left;
     translate: -.3em;
@@ -34,9 +35,41 @@
   }
 
   input:focus + label,
-  input:not(:placeholder-shown) + label {
-    transform: translateY(calc(-50% - var(--pad))) scale(.8);
+  input:not(:placeholder-shown) + label,
+  input:-webkit-autofill + label {
+    transform: translateY(calc(-50% - 1rem)) scale(.8);
     color: $secondary-color;
     background: $background-color;
+  }
+
+  .iconContainer {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  // Error styles
+  &.error {
+    input {
+      border-color: red !important; // Червоний контур для помилки
+      color: red !important; // Червоний текст при помилці
+    }
+
+    label {
+      color: red !important; // Червоний колір для тексту лейбла
+    }
+
+    .errorMessage {
+      color: red;
+      font-size: 0.875rem;
+      margin-top: 4px;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
   }
 }
