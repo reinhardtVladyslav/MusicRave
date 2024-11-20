@@ -38,10 +38,9 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class Users(AbstractBaseUser):
     id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=20, default=None)
-    last_name = models.CharField(max_length=20, default=None)
+    username = models.CharField(max_length=20, default=None)
     email = models.EmailField(max_length=100, unique=True, default=None)
     password = models.CharField(default=None, max_length=255)
     bio = models.TextField(max_length=500, blank=True, null=True)
@@ -51,75 +50,21 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def __str__(self):
-        return self.email
-
-    def __repr__(self):
-        return f"{User.__name__}(id={self.id})"
+        return f"{self.username}"
 
     @staticmethod
-    def get_by_id(user_id):
-        custom_user = User.objects.filter(id=user_id).first()
-        return custom_user if custom_user else None
-
-    @staticmethod
-    def get_by_email(email):
-        custom_user = User.objects.filter(email=email).first()
-        return custom_user if custom_user else None
-
-    @staticmethod
-    def delete_by_id(user_id):
-        user_to_delete = User.objects.filter(id=user_id).first()
-        if user_to_delete:
-            User.objects.filter(id=user_id).delete()
-            return True
-        return False
-
-    @staticmethod
-    def create(email, password, first_name=None, last_name=None):
+    def create(email, password, username=None):
         if (
-            len(first_name) <= 20
-            and len(last_name) <= 20
+            len(username) <= 20
             and len(email) <= 100
             and len(email.split("@")) == 2
-            and len(User.objects.filter(email=email)) == 0
+            and len(Users.objects.filter(email=email)) == 0
         ):
-            custom_user = User(
+            custom_user = Users(
                 email=email,
                 password=make_password(password),
-                first_name=first_name,
-                last_name=last_name,
+                username=username,
             )
             custom_user.save()
             return custom_user
         return None
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "first_name": f"{self.first_name}",
-            "last_name": f"{self.last_name}",
-            "email": f"{self.email}",
-            "created_at": int(self.created_at.timestamp()),
-        }
-
-    def update(
-        self,
-        first_name=None,
-        last_name=None,
-        password=None,
-        bio=None,
-    ):
-        user_to_update = User.objects.filter(email=self.email).first()
-        if first_name != None and len(first_name) <= 20:
-            user_to_update.first_name = first_name
-        if last_name != None and len(last_name) <= 20:
-            user_to_update.last_name = last_name
-        if bio != None and len(bio) <= 500:
-            user_to_update.bio = bio
-        if password != None:
-            user_to_update.set_password(password)
-        user_to_update.save()
-
-    @staticmethod
-    def get_all():
-        return User.objects.all()

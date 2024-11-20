@@ -38,17 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "home",
-    "user",
-    "track",
-    "rest_framework",
+    "users",
     "corsheaders",
 ]
 
-AUTH_USER_MODEL = "user.User"
+AUTH_USER_MODEL = "users.Users"
 
 AUTHENTICATION_BACKENDS = [
-    "user.auth_backends.EmailBackend",
+    "users.auth_backends.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",  # Keep the default as fallback
 ]
 
@@ -66,6 +63,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "http://localhost:3001",
 ]
 
 ROOT_URLCONF = "musicrave.urls"
@@ -73,7 +71,7 @@ ROOT_URLCONF = "musicrave.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -89,16 +87,16 @@ TEMPLATES = [
 WSGI_APPLICATION = "musicrave.wsgi.application"
 
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "musicrave",
-        "USER": "musicrave_admin",
-        "PASSWORD": "musicrave_pass",
-        "HOST": "musicrave-db.craozyflxutr.eu-north-1.rds.amazonaws.com",
-        "PORT": "5432",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": "musicrave",
+#         "USER": "musicrave_admin",
+#         "PASSWORD": "musicrave_pass",
+#         "HOST": "musicrave-db.craozyflxutr.eu-north-1.rds.amazonaws.com",
+#         "PORT": "5432",
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -143,7 +141,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# try:
-#     from .local_settings import *
-# except ImportError:
-#     pass
+try:
+    from .local_settings import *
+except ImportError:
+    pass
