@@ -19,9 +19,9 @@ const SongItem: React.FC = () => {
 
     useEffect(() => {
         const fetchSongs = async () => {
-            const response = await fetch('http://localhost:8000/tracks/api/tracks/');
+            const response = await fetch('http://localhost:8000/tracks/');
             const data = await response.json();
-            setSongs(data);
+            setSongs(data.tracks);
         };
 
         fetchSongs();

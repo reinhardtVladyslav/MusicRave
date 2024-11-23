@@ -24,9 +24,9 @@ const Dropdown: React.FC<DropdownProps> = ({setSelect, value}) => {
 
     useEffect(() => {
         const fetchAlbums = async () => {
-            const response = await fetch('http://localhost:8000/tracks/api/albums/');
+            const response = await fetch('http://localhost:8000/albums/');
             const data = await response.json();
-            setAlbums(data);
+            setAlbums(data.albums);
         };
 
         fetchAlbums();

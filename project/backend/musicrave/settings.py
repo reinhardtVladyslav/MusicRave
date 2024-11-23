@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users",
     "corsheaders",
+    "rest_framework",
+    "users",
+    "tracks",
+    "albums",
 ]
 
 AUTH_USER_MODEL = "users.Users"
