@@ -4,16 +4,16 @@ from albums.models import Album
 from users.models import Users
 from mutagen import File
 from datetime import timedelta
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import TrackSerializer
+from rest_framework.views import APIView
 
 
-@api_view(["GET"])
-def show_tracks(request):
-    tracks = Track.objects.all()
-    serializer = TrackSerializer(tracks, many=True)
-    return Response({"tracks": serializer.data})
+class TrackListView(APIView):
+    def get(self, request):
+        tracks = Track.objects.all()
+        serializer = TrackSerializer(tracks, many=True, context={"request": request})
+        return Response({"tracks": serializer.data})
 
 
 def add_track(request):
@@ -21,7 +21,7 @@ def add_track(request):
         return JsonResponse({"error": "User not authenticated"}, status=401)
 
     title = request.POST.get("title")
-    authors_ids = request.POST.getlist("authors")
+    authors = request.POST.get("authors")
     album_id = request.POST.get("album")
     audio = request.FILES.get("audio")
     cover_image = request.FILES.get("cover_image")
@@ -51,8 +51,9 @@ def add_track(request):
             user=request.user,
         )
 
-        if authors_ids:
-            authors = Users.objects.filter(id__in=authors_ids)
+        if authors:
+            authors_list = [username.strip() for username in authors.split(",")]
+            authors = Users.objects.filter(username__in=authors_list)
             track.authors.set(authors)
 
         return JsonResponse(
