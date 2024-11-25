@@ -52,8 +52,8 @@ def log_in(request):
         return JsonResponse({"error": "An error occurred during login."}, status=500)
 
 
-# def log_out(request):
-#     if not request.user.is_authenticated:
-#         return redirect(reverse("users:login"))
-#     logout(request)
-#     return redirect(reverse("home:home"))
+def log_out(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({"error": "User not authenticated"}, status=401)
+    logout(request)
+    return JsonResponse({"message": "User successfully logged out"}, status=200)
