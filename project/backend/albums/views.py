@@ -6,10 +6,10 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 
 
-class AlbumListAPIView(APIView):
+class AlbumListView(APIView):
     def get(self, request):
         albums = Album.objects.annotate(track_count=Count("tracks"))
-        serializer = AlbumSerializer(albums, many=True)
+        serializer = AlbumSerializer(albums, many=True, context={"request": request})
         return Response({"albums": serializer.data})
 
 

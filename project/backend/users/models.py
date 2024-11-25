@@ -53,6 +53,11 @@ class Users(AbstractBaseUser):
         return f"{self.username}"
 
     @staticmethod
+    def get_by_id(user_id):
+        custom_user = Users.objects.filter(id=user_id).first()
+        return custom_user if custom_user else None
+
+    @staticmethod
     def create(email, password, username=None):
         if (
             len(username) <= 20
