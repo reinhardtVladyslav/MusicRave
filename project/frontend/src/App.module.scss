@@ -5,6 +5,7 @@
   height: 100vh;
   font-family: $main-font;
   position: relative;
+  padding: 0 140px;
 
   h1 {
     font-size: 48px;
@@ -19,6 +20,19 @@
   align-items: center;
   color: $primary-color;
   margin-bottom: 45px;
+}
+
+.navigation {
+  flex: 0 0 96px; /* Фіксована ширина навігаційної панелі */
+  height: 100vh; /* Висота на весь екран */
+  position: fixed; /* Фіксує навігацію на місці */
+  top: 0;
+  left: 0;
+  background-color: #000; /* Чорний фон */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
 }
 
 .modalActive {
