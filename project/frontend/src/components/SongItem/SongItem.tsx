@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import style from './SongItem.module.scss';
-import music from '../../assets/data/music.json';
+// import music from '../../assets/data/music.json';
 import Player from '../Player/Player'; // Імпортуємо Player
 
 interface Song {
@@ -14,10 +14,21 @@ interface Song {
 }
 
 const SongItem: React.FC = () => {
+    const [music, setSongs] = useState<Song[]>([]);
     const [currentSong, setCurrentSong] = useState<Song | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
     const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchSongs = async () => {
+            const response = await fetch('http://localhost:8000/tracks/');
+            const data = await response.json();
+            setSongs(data.tracks);
+        };
+
+        fetchSongs();
+    }, []);
 
     // Відтворення треку
     const playSong = (song: Song, index: number) => {

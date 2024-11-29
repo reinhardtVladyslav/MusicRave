@@ -10,7 +10,9 @@ class AuthorSerializer(serializers.ModelSerializer):
 
 class TrackSerializer(serializers.ModelSerializer):
     authors = AuthorSerializer(many=True)
+    image = serializers.ImageField(source="cover_image")
+    album = serializers.CharField(source="album.name")
 
     class Meta:
         model = Track
-        fields = "__all__"
+        fields = ["id", "name", "authors", "album", "duration", "audio", "image"]

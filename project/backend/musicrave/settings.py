@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "users",
     "tracks",
     "albums",
+    "orders",
 ]
 
 AUTH_USER_MODEL = "users.Users"
@@ -64,10 +65,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "musicrave.urls"
 
