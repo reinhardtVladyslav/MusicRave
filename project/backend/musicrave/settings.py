@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     "users",
     "tracks",
     "albums",
+    'transactions',
+    'materials',
     "orders",
 ]
 
@@ -87,7 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "musicrave.wsgi.application"
 
-
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql_psycopg2",
@@ -98,7 +99,6 @@ WSGI_APPLICATION = "musicrave.wsgi.application"
 #         "PORT": "5432",
 #     }
 # }
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
