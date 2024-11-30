@@ -6,7 +6,7 @@ import Input from '../../components/Input/Input';
 import Eye from '../../assets/svg/EyeSVG';
 import EyeSlash from '../../assets/svg/EyeSlashSVG';
 import loginBackgroundImage from '../../assets/images/login_screen.gif';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface LoginProps {
     onLogin: () => void;
@@ -19,6 +19,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [serverError, setServerError] = useState('');
+    
+    const navigate = useNavigate();
 
     const validateEmail = (value: string) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitted(true);
 
@@ -64,8 +67,32 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         }
 
         if (valid) {
-            console.log('Email:', email, 'Password:', password);
-            onLogin();
+            try {
+                const response = await fetch('http://127.0.0.1:8000/users/login/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        email: email,
+                        password: password,
+                    }).toString(),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    setServerError(errorData.error || 'Something went wrong');
+                } else {
+                    const data = await response.json();
+                    console.log('Login Successful:', data);
+                    sessionStorage.setItem('user_id', data.user_id);
+                    onLogin();
+                    navigate('/discover');
+                }
+            } catch (error) {
+                setServerError('Network error. Please try again later.');
+                console.error('Error during login:', error);
+            }
         }
     };
 

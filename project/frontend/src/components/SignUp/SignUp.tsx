@@ -13,6 +13,7 @@ const SignUp: React.FC = () => {
     const [passwordError, setPasswordError] = useState('');
     const [confirmPasswordError, setConfirmPasswordError] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [serverError, setServerError] = useState('');
 
     const navigate = useNavigate(); // Додано для навігації
 
@@ -46,7 +47,7 @@ const SignUp: React.FC = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitted(true);
 
@@ -74,9 +75,31 @@ const SignUp: React.FC = () => {
         }
 
         if (valid) {
-            console.log('SignUp Successful:', { email, password });
-            // Навігація на нову сторінку після успішної реєстрації
-            navigate('/discover'); // Перенаправлення на сторінку /welcome
+            try {
+                const response = await fetch('http://127.0.0.1:8000/users/register/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        email: email,
+                        password: password,
+                    }).toString(),
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    setServerError(errorData.message || 'Something went wrong');
+                } else {
+                    const data = await response.json();
+                    console.log('SignUp Successful:', data);
+                    sessionStorage.setItem('user_id', data.user_id);
+                    navigate('/discover');
+                }
+            } catch (error) {
+                setServerError('Network error. Please try again later.');
+                console.error('Error during sign-up:', error);
+            }
         }
     };
 

@@ -7,6 +7,7 @@ from datetime import timedelta
 from rest_framework.response import Response
 from .serializers import TrackSerializer
 from rest_framework.views import APIView
+from django.views.decorators.csrf import csrf_exempt
 
 
 class TrackListView(APIView):
@@ -16,15 +17,16 @@ class TrackListView(APIView):
         return Response({"tracks": serializer.data})
 
 
+@csrf_exempt
 def add_track(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({"error": "User not authenticated"}, status=401)
-
+    user_id = request.POST.get("user_id")
+    user = Users.get_by_id(int(user_id))
     title = request.POST.get("title")
     authors = request.POST.get("authors")
-    album_id = request.POST.get("album")
+    album = request.POST.get("album")
+    album_id = Album.objects.get(name=album).id
     audio = request.FILES.get("audio")
-    cover_image = request.FILES.get("cover_image")
+    # cover_image = request.FILES.get("cover_image")
 
     if not title:
         return JsonResponse({"error": "Title is required"}, status=400)
@@ -32,8 +34,8 @@ def add_track(request):
         return JsonResponse({"error": "Audio file is required"}, status=400)
     if not album_id:
         return JsonResponse({"error": "Album is required"}, status=400)
-    if not cover_image:
-        return JsonResponse({"error": "Cover image is required"}, status=400)
+    # if not cover_image:
+    #     return JsonResponse({"error": "Cover image is required"}, status=400)
 
     try:
         audio_file = File(audio)
@@ -47,8 +49,8 @@ def add_track(request):
             duration=duration,
             album=album,
             audio=audio,
-            cover_image=cover_image,
-            user=request.user,
+            # cover_image=cover_image,
+            user=user,
         )
 
         if authors:
@@ -65,7 +67,7 @@ def add_track(request):
                     "duration": str(track.duration),
                     "album": track.album.name,
                     "audio": track.audio.url,
-                    "cover_image": track.cover_image.url,
+                    # "cover_image": track.cover_image.url,
                 },
             }
         )

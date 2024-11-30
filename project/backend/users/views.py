@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from django.db.models import Count
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
+import jwt
+from django.conf import settings
 
 
 def validate_input(email, password):
@@ -23,13 +25,20 @@ def validate_input(email, password):
         raise ValueError("Password must be at least 8 characters long.")
 
 
+@csrf_exempt
 def register(request):
     try:
         email = request.POST.get("email")
         password = request.POST.get("password")
         validate_input(email, password)
-        Users.create(email, password)
-        return JsonResponse({"message": "User registered successfully."}, status=201)
+        user = Users.create(email, password)
+        return JsonResponse(
+            {
+                "message": "User registered successfully.",
+                "user_id": user.id,
+            },
+            status=201,
+        )
     except ValueError as e:
         return JsonResponse({"error": str(e)}, status=400)
     except Exception as e:
@@ -86,6 +95,7 @@ def update_user(request):
         return JsonResponse({"error": "Something went wrong."}, status=500)
 
 
+@csrf_exempt
 def log_in(request):
     try:
         email = request.POST.get("email")
@@ -97,22 +107,27 @@ def log_in(request):
 
         user = authenticate(request, email=email, password=password)
         if user is not None:
-            login(request, user)
-            user_data = model_to_dict(user, exclude=["password"])
             return JsonResponse(
-                {"message": "Login successful.", "user": user_data}, status=200
+                {
+                    "message": "Login successful.",
+                    "user_id": user.id,
+                },
+                status=200,
             )
         else:
             return JsonResponse({"error": "Invalid email or password."}, status=401)
     except Exception as e:
-        return JsonResponse({"error": "An error occurred during login."}, status=500)
+        print(e)
+        return JsonResponse(
+            {"error": f"An error occurred during login: {e}."}, status=500
+        )
 
 
-def log_out(request):
-    if not request.user.is_authenticated:
-        return JsonResponse({"error": "User not authenticated"}, status=401)
-    logout(request)
-    return JsonResponse({"message": "User successfully logged out"}, status=200)
+# def log_out(request):
+#     if not request.user.is_authenticated:
+#         return JsonResponse({"error": "User not authenticated"}, status=401)
+#     logout(request)
+#     return JsonResponse({"message": "User successfully logged out"}, status=200)
 
 
 class UserTracksListView(APIView):
