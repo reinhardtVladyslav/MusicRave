@@ -89,17 +89,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "musicrave.wsgi.application"
 
-DATABASE = "simpledbmamager"
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "5656",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": "musicrave",
+#         "USER": "musicrave_admin",
+#         "PASSWORD": "musicrave_pass",
+#         "HOST": "musicrave-db.craozyflxutr.eu-north-1.rds.amazonaws.com",
+#         "PORT": "5432",
+#     }
+# }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
