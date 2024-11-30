@@ -9,7 +9,7 @@ class Track(models.Model):
     authors = models.ManyToManyField(Users, blank=True)
     duration = models.DurationField(null=True, blank=True)
     audio = models.FileField(upload_to="tracks/audio/")
-    cover_image = models.ImageField(upload_to="tracks/covers/", null=True)
+    # cover_image = models.ImageField(upload_to="tracks/covers/", null=True)
     album = models.ForeignKey(
         Album, on_delete=models.CASCADE, related_name="tracks", null=True
     )

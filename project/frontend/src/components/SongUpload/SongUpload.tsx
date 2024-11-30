@@ -26,6 +26,50 @@ const SongUpload: React.FC<Props> = ({ setIsModalOpen }) => {
         };
     }, []);
 
+
+    const handleSubmit = async () => {
+        if (!trackName || !selectedFile || !selectedAlbum) {
+            alert('Please fill all required fields.');
+            return;
+        }
+
+        const user_id = sessionStorage.getItem('user_id');
+
+        if (!user_id) {
+            alert('User not logged in');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("title", trackName);
+        formData.append("authors", artists);
+        formData.append("album", selectedAlbum);
+        formData.append("audio", selectedFile);
+        formData.append("user_id", user_id);
+
+        try {
+            const response = await fetch('http://127.0.0.1:8000/tracks/add/', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Handle success
+                console.log('Track added successfully:', data.track);
+                setIsModalOpen(false);  // Close modal after successful submission
+                window.location.reload();
+            } else {
+                // Handle error
+                alert(data.error || 'Something went wrong');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while uploading the track');
+        }
+    };
+
     return (
         <div className={style.songUpload}>
             <UploadAndDisplayImage/>
@@ -42,7 +86,7 @@ const SongUpload: React.FC<Props> = ({ setIsModalOpen }) => {
             </label>
             <div className={style.actionButtons}>
                 <Button text={'Cancel'} className={style.cancelBtn} onClick={() => setIsModalOpen(false)}/>
-                <Button text={'Create'} className={style.createBtn} onClick={() => setIsModalOpen(false)}/>
+                <Button text={'Create'} className={style.createBtn} onClick={handleSubmit} />
             </div>
         </div>
     );

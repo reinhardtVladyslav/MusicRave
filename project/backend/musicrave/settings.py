@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "albums",
     'transactions',
     'materials',
+    "orders",
 ]
 
 AUTH_USER_MODEL = "users.Users"
@@ -66,10 +67,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = "musicrave.urls"
 
@@ -144,6 +142,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 50 * 1024 * 1024  # 50 MB
 
 try:
     from .local_settings import *

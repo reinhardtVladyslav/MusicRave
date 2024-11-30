@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import style from './SongItem.module.scss';
 // import music from '../../assets/data/music.json';
+import Player from '../Player/Player'; // Імпортуємо Player
 
 interface Song {
     id: number;
@@ -9,13 +10,15 @@ interface Song {
     album: string;
     duration: string;
     audio: string;
+    image?: string; // Додано для відображення зображення
 }
 
 const SongItem: React.FC = () => {
     const [music, setSongs] = useState<Song[]>([]);
     const [currentSong, setCurrentSong] = useState<Song | null>(null);
-    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
+
+    const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const fetchSongs = async () => {
@@ -27,84 +30,45 @@ const SongItem: React.FC = () => {
         fetchSongs();
     }, []);
 
-    useEffect(() => {
-        // Clean up audio on unmount
-        return () => {
-            if (audio) {
-                audio.pause();
-                audio.src = ""; // Від'єднуємо джерело
-            }
-        };
-    }, [audio]);
+    // Відтворення треку
+    const playSong = (song: Song, index: number) => {
+        setCurrentSong(song);
+        setCurrentIndex(index);
+        setIsPlaying(true);
+    };
 
-    const playSong = (song: Song) => {
-        try {
-            // Якщо є активний аудіоелемент, зупиняємо його
-            if (audio) {
-                audio.pause();
-                audio.src = ""; // Очищення попереднього джерела
-            }
+    // Переключення паузи/відтворення
+    const togglePlayPause = (newState: boolean) => {
+        setIsPlaying(newState);
+    };
 
-            // Створюємо новий аудіоелемент
-            const newAudio = new Audio(song.audio);
-            setAudio(newAudio);
-            setCurrentSong(song);
+    // Наступна пісня
+    const nextSong = () => {
+        if (currentIndex !== null && currentIndex < music.length - 1) {
+            const nextIndex = currentIndex + 1;
+            setCurrentSong(music[nextIndex]);
+            setCurrentIndex(nextIndex);
             setIsPlaying(true);
-
-            // Відтворюємо трек
-            newAudio.play().catch((error) => {
-                console.error("Помилка відтворення:", error);
-                setIsPlaying(false);
-            });
-
-            // Ставимо флаг "isPlaying = false", якщо трек закінчився
-            newAudio.onended = () => {
-                setIsPlaying(false);
-            };
-        } catch (error) {
-            console.error("Помилка під час запуску треку:", error);
         }
     };
 
-    const togglePlayPause = () => {
-        if (audio) {
-            try {
-                if (isPlaying) {
-                    audio.pause();
-                } else {
-                    audio.play().catch((error) => {
-                        console.error("Помилка під час відновлення відтворення:", error);
-                    });
-                }
-                setIsPlaying(!isPlaying);
-            } catch (error) {
-                console.error("Помилка під час паузи/відтворення:", error);
-            }
-        }
-    };
-
-    const closeSong = () => {
-        if (audio) {
-            try {
-                audio.pause();
-                audio.currentTime = 0;
-                audio.src = ""; // Очищення джерела аудіо
-                setAudio(null);
-                setIsPlaying(false);
-                setCurrentSong(null);
-            } catch (error) {
-                console.error("Помилка при зупинці треку:", error);
-            }
+    // Попередня пісня
+    const prevSong = () => {
+        if (currentIndex !== null && currentIndex > 0) {
+            const prevIndex = currentIndex - 1;
+            setCurrentSong(music[prevIndex]);
+            setCurrentIndex(prevIndex);
+            setIsPlaying(true);
         }
     };
 
     return (
         <>
-            {music.map((song: Song) => (
+            {music.map((song: Song, index) => (
                 <div
                     key={song.id}
                     className={style.tableRow}
-                    onClick={() => playSong(song)}
+                    onClick={() => playSong(song, index)}
                 >
                     <span className={style.number}>{song.id}</span>
                     <div className={style.title}>
@@ -117,17 +81,15 @@ const SongItem: React.FC = () => {
             ))}
 
             {currentSong && (
-                <div className={style.audioPlayer}>
-                    <span className={style.nowPlaying}>
-                        Now Playing: {currentSong.name} by {currentSong.author}
-                    </span>
-                    <div className={style.controls}>
-                        <button onClick={togglePlayPause} className={style.controlButton}>
-                            {isPlaying ? 'Pause' : 'Play'}
-                        </button>
-                        <button onClick={closeSong} className={style.controlButton}>Close</button>
-                    </div>
-                </div>
+                <Player
+                    currentSong={currentSong}
+                    isPlaying={isPlaying}
+                    togglePlayPause={togglePlayPause}
+                    nextSong={nextSong}
+                    prevSong={prevSong}
+                    currentIndex={currentIndex!}
+                    musicLength={music.length}
+                />
             )}
         </>
     );

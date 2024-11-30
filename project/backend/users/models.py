@@ -40,7 +40,7 @@ class UserManager(BaseUserManager):
 
 class Users(AbstractBaseUser):
     id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=20, default=None)
+    username = models.CharField(max_length=20, blank=True, null=True)
     email = models.EmailField(max_length=100, unique=True, default=None)
     password = models.CharField(default=None, max_length=255)
     bio = models.TextField(max_length=500, blank=True, null=True)
@@ -58,18 +58,34 @@ class Users(AbstractBaseUser):
         return custom_user if custom_user else None
 
     @staticmethod
-    def create(email, password, username=None):
+    def create(email, password):
         if (
-            len(username) <= 20
-            and len(email) <= 100
+            len(email) <= 100
             and len(email.split("@")) == 2
             and len(Users.objects.filter(email=email)) == 0
         ):
             custom_user = Users(
                 email=email,
                 password=make_password(password),
-                username=username,
             )
             custom_user.save()
             return custom_user
         return None
+
+    def update(
+        self,
+        username=None,
+        email=None,
+        password=None,
+        bio=None,
+    ):
+        user_to_update = Users.objects.filter(email=self.email).first()
+        if username != None and len(username) <= 20:
+            user_to_update.username = username
+        if email != None:
+            user_to_update.email = email
+        if password != None:
+            user_to_update.set_password(password)
+        if bio != None and len(bio) <= 500:
+            user_to_update.bio = bio
+        user_to_update.save()

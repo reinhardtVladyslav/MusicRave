@@ -5,8 +5,8 @@
     "author": "The Beatles",
     "duration": "2:30",
     "album": "Abbey Road",
-    "audio": "https://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3",
-    "image": "https://www.thebeatles.com/sites/g/files/g2000005341/f/201809/abbey_road.jpg"
+    "audio": "https://rocknation.su/upload/mp3/The%20Beatles/1963%20-%20Please%20Please%20Me/01.%20I%20Saw%20Her%20Standing%20There.mp3",
+    "image": "https://i.pinimg.com/736x/13/99/44/139944986cb54a50222a01f2bbe03f98.jpg"
   },
   {
     "id": 2,
@@ -15,7 +15,7 @@
     "duration": "5:55",
     "album": "A Night at the Opera",
     "audio": "https://rocknation.su/upload/mp3/Queen/1995%20-%20Made%20In%20Heaven/01.%20It_s%20A%20Beautiful%20Day.mp3",
-    "image": "https://www.queenonline.com/sites/g/files/g2000005341/f/201809/queen_-_anato.jpg"
+    "image": "https://i.pinimg.com/736x/ec/77/74/ec77740ea104b2570bf65fa00886d450.jpg"
   },
   {
     "id": 3,
@@ -24,7 +24,7 @@
     "duration": "8:02",
     "album": "Led Zeppelin IV",
     "audio": "https://rocknation.su/upload/mp3/AC-DC/1975%20-%20High%20Voltage/02.%20She_s%20Got%20Balls.mp3",
-    "image": "https://www.ledzeppelin.com/sites/g/files/g2000005341/f/201809/led_zeppelin_-_iv.jpg"
+    "image": "https://i.pinimg.com/736x/c7/90/d4/c790d4600835f5a835b64e522229faf3.jpg"
   },
   {
     "id": 4,
@@ -33,6 +33,6 @@
     "duration": "6:30",
     "album": "Hotel California",
     "audio": "https://rocknation.su/upload/mp3/Red%20Hot%20Chili%20Peppers/1999%20-%20Californication/06.%20Californication.mp3",
-    "image": "https://www.eagles.com/sites/g/files/g2000005341/f/201809/eagles_-_hotel_california.jpg"
+    "image": "https://i.pinimg.com/736x/2b/6b/1c/2b6b1c671eadf324b258c55cb776285c.jpg"
   }
 ]

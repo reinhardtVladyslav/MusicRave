@@ -1,0 +1,49 @@
+@import '../../styles/global';
+
+.navigation {
+  width: 96px; /* Фіксована ширина навігації */
+  height: 100vh; /* Займає всю висоту екрана */
+  position: fixed; /* Фіксується на екрані */
+  top: 0;
+  left: 0;
+  background-color: $background-color;
+  display: flex;
+  flex-direction: column; /* Елементи розташовуються вертикально */
+  align-items: center; /* Вирівнювання по центру */
+  padding: 10px 0;
+  color: #fff;
+}
+
+.menu-item {
+  width: 100%;
+  display: flex; /* Використовуємо Flexbox для вирівнювання */
+  flex-direction: column; /* Іконка зверху, текст знизу */
+  align-items: center; /* Вирівнювання по горизонталі */
+  justify-content: center; /* Вирівнювання по вертикалі */
+  padding: 20px 0;
+  cursor: pointer;
+
+  &.active {
+    background-color: $active-color;
+  }
+
+  .icon {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+.profile {
+  margin-top: auto; /* Відсуває профіль донизу */
+  padding-bottom: 20px; /* Відступ від нижнього краю */
+  cursor: pointer;
+
+  .profile-img {
+    width: 60px; /* Розмір аватару */
+    height: 60px;
+    border-radius: 50%; /* Робить аватар круглим */
+    border: 2px solid #fff; /* Білий контур */
+    object-fit: cover; /* Забезпечує коректне відображення зображення */
+  }
+}
